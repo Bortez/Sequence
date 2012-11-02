@@ -1,6 +1,6 @@
 /*
 Sequence.js (www.sequencejs.com)
-Version: 0.7.4.1 Beta
+Version: 0.7.4.2 Beta (Preloader Test)
 Author: Ian Lunn @IanLunn
 Author URL: http://www.ianlunn.co.uk/
 Github: https://github.com/IanLunn/Sequence
@@ -175,23 +175,28 @@ Aside from these comments, you may modify and distribute this file as you please
             var imagesToPreload = $(frameImagesToPreload.concat(individualImagesToPreload)); //combine frame images and individual images
 			var imagesToPreloadLength = imagesToPreload.length;
 
-			//reliable .load() alternative from here: https://gist.github.com/797120/b7359a8ba0ab5be298875215d07819fe61f87399
-			if(!imagesToPreload.length){ //if there are no images to preload...
+			imagesToPreload.imagesLoaded(function(){
 				oncePreloaded();
-			}else{
-				imagesToPreload.bind("load",function(){
-					if(--imagesToPreloadLength <= 0){ 
-					  oncePreloaded();
-					}
-				}).each(function(){
-					// cached images don't fire load sometimes, so we reset src.
-					if (this.complete || this.complete === undefined){
-					  var src = this.src;				  
-					  this.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="; // webkit hack from http://groups.google.com/group/jquery-dev/browse_thread/thread/eee6ab7b2da50e1f
-					  this.src = src;
-					}  
-				}); 
-			}
+				console.log("B");
+			});
+
+			//reliable .load() alternative from here: https://gist.github.com/797120/b7359a8ba0ab5be298875215d07819fe61f87399
+			// if(!imagesToPreload.length){ //if there are no images to preload...
+			// 	oncePreloaded();
+			// }else{
+			// 	imagesToPreload.bind("load",function(){
+			// 		if(--imagesToPreloadLength <= 0){ 
+			// 		  oncePreloaded();
+			// 		}
+			// 	}).each(function(){
+			// 		// cached images don't fire load sometimes, so we reset src.
+			// 		if (this.complete || this.complete === undefined){
+			// 		  var src = this.src;				  
+			// 		  this.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="; // webkit hack from http://groups.google.com/group/jquery-dev/browse_thread/thread/eee6ab7b2da50e1f
+			// 		  this.src = src;
+			// 		}  
+			// 	}); 
+			// }
     	}else{
 		    $(window).bind("load", function(){
 		    	oncePreloaded();
